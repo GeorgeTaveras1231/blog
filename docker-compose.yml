@@ -1,0 +1,14 @@
+gems:
+  image: ruby:2.3
+  command: "echo I am a data container"
+  volumes:
+    - /usr/local/bundle
+
+jekyll:
+  image: ruby:2.3
+  volumes_from:
+    - gems
+  volumes:
+    - .:/usr/src/GeorgeTaveras1231.github.io
+  working_dir: /usr/src/GeorgeTaveras1231.github.io
+  net: host
