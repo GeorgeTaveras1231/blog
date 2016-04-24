@@ -1,0 +1,43 @@
+<p>
+Memoization is a common practice used in software development. It's purpose is to save computational power by
+storing the results of an expensive call, associating the results with the given parameter, and returning the cached
+result when the same call is made with the same parameters.
+
+The <a href="http://en.wikipedia.org/wiki/Fibonacci_number">fibonacci sequence</a> is a good problem to demo
+memoization because it has a popular doubly recursive solution, that, as you may have guessed, is expensive in terms of
+memory and time.
+
+Here is that implementation in Ruby:
+<script src="https://gist.github.com/GeorgeTaveras1231/430c31c578f6a79cdba6.js"></script>
+
+So as I mentioned, while this may be a very beatiful and expressive implementation of the fibonacci, recursion is not
+optimal in most langauages (Note that this implementation does not use tail recursion so it
+cannot even be optimized by languages that support tail recursion optimization). Running the following snippet
+freezes my Ruby interpreter.
+
+<script src="https://gist.github.com/GeorgeTaveras1231/1d76eac5d70960606703.js"></script>
+
+Another reason why this implementation of the fibonacci sequence is a good example is because the fibonacci function is
+called multiple times for the same number. To see what I mean, checkout the beautifully drawn example of the function
+and the call stack it generates when called with an argument of 5.
+
+<img src="https://40.media.tumblr.com/1dbbe430b7b8fd0e20e509c246ad700d/tumblr_n78hktdlwC1tt3vpco1_500.jpg" alt="example of recursive fibonacci implementation" title="fibonacci(5)">
+
+In order to optimize this function using Memoization, we need to introduce a cache object, where we will first check if
+there is a result cached for the given parameter, then store any calculated result for future reference.
+
+<script src="https://gist.github.com/GeorgeTaveras1231/8361434a488187862e7e6d3c7dcaa9fd.js"></script>
+
+Or, if you like to get fancy, you can implement the whole thing inside a Ruby Hash.
+
+<script src="https://gist.github.com/GeorgeTaveras1231/90370215cab3c2fe3cdc.js"></script>
+
+So to wrap up this blog post, I will show you another one of my beautifully drawn examples of how this boosts up the
+performance of our original function. This time, I will use square brackets to point out the times where a value is
+being fetched from a cache rather than adding to the function call stack.
+
+<img src="https://40.media.tumblr.com/9d7ccb262bb8aa3e6c4f9e1b431539c9/tumblr_n78hktdlwC1tt3vpco2_r1_500.jpg">
+
+And the following are some benchmarks that show about a 13 second difference when getting the 40th fibonacci number
+
+<script src="https://gist.github.com/GeorgeTaveras1231/b716bf4289a825755f5e348f9cf8c35d.js"></script>
